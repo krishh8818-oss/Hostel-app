@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sai Nath Hostel">
+<meta name="application-name" content="Sai Nath Hostel">
+<meta name="theme-color" content="#E85D20" id="themeMetaColor">
+<meta name="description" content="Shri Sai Nath Boys Hostel - Rent Management">
+<link rel="manifest" id="pwaManifest">
+<title>Shri Sai Nath Boys Hostel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F0F4FF;--bg2:#E8EEFF;--bg3:#F8F9FF;--card:#FFFFFF;--card2:#F4F6FF;--border:#D0D8F0;
+  --orange:#E85D20;--orange-glow:rgba(232,93,32,0.18);
+  --green:#00A854;--green-dim:#E6F9F0;--red:#E03040;--red-dim:#FDEAEA;
+  --yellow:#E6A800;--blue:#2A7FE0;--purple:#7C5CDB;
+  --text:#1A1F3A;--text2:#5A6490;--text3:#9AA0C0;
+}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse 700px 500px at 10% 10%,rgba(232,93,32,0.06) 0%,transparent 60%),radial-gradient(ellipse 600px 600px at 90% 90%,rgba(42,127,224,0.05) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;}
+
+.hdr{background:rgba(255,255,255,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.hdr-in{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;}
+.logo{display:flex;align-items:center;gap:14px;}
+.logo-ic{width:46px;height:46px;background:linear-gradient(135deg,var(--orange),#E64000);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 24px var(--orange-glow);}
+.logo h1{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--text);line-height:1.2;}
+.logo p{font-size:11px;color:var(--text2);}
+.hdr-right{font-size:12px;color:var(--text2);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 13px;}
+.hdr-right b{color:var(--orange);}
+
+.main{max-width:960px;margin:0 auto;padding:26px 18px;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px;}
+.sbox{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px 16px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;animation:fadeUp .5s ease both;}
+.sbox:nth-child(2){animation-delay:.06s;}.sbox:nth-child(3){animation-delay:.12s;}.sbox:nth-child(4){animation-delay:.18s;}
+.sbox:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,0,0,.4);}
+.sbox::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0;}
+.sbox.or::before{background:linear-gradient(90deg,var(--orange),#FF9A62);}
+.sbox.re::before{background:linear-gradient(90deg,var(--red),#FF8E97);}
+.sbox.gr::before{background:linear-gradient(90deg,var(--green),#69F0AE);}
+.sbox.pu::before{background:linear-gradient(90deg,var(--purple),#C4B5FD);}
+.sbox-ico{font-size:26px;opacity:.1;position:absolute;right:12px;top:50%;transform:translateY(-50%);}
+.sbox-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);}
+.sbox-num{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;line-height:1;margin:5px 0 3px;}
+.or .sbox-num{color:var(--orange);}.re .sbox-num{color:var(--red);}
+.re .sbox-sub{color:var(--red);font-weight:700;font-size:12px;}.gr .sbox-num{color:var(--green);}.pu .sbox-num{color:var(--purple);}
+.sbox-sub{font-size:11px;color:var(--text2);font-weight:600;}
+
+/* CONTROLS */
+.ctrl{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center;}
+.sw{flex:1;min-width:180px;position:relative;}
+.sw svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);width:15px;height:15px;pointer-events:none;}
+.si{width:100%;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 12px 11px 38px;color:var(--text);font-family:inherit;font-size:13px;outline:none;transition:border-color .2s,box-shadow .2s;}
+.si::placeholder{color:var(--text3);}.si:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-glow);}
+.tabs{display:flex;gap:5px;}
+.tb{padding:10px 15px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.tb.on{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 0 18px var(--orange-glow);}
+.tb:not(.on):hover{border-color:var(--orange);color:var(--orange);}
+.addbtn{background:linear-gradient(135deg,var(--orange),#E64000);color:#fff;border:none;padding:11px 18px;border-radius:11px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 18px var(--orange-glow);white-space:nowrap;}
+.addbtn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(255,107,43,.45);}
+
+/* FORM */
+.formpanel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;margin-bottom:18px;display:none;animation:fadeUp .3s ease;}
+.formpanel.show{display:block;}
+.ftitle{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--orange);margin-bottom:16px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;}
+.fg input{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text);font-family:inherit;font-size:13px;outline:none;transition:all .2s;}
+.fg input::placeholder{color:var(--text3);}.fg input:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-glow);}
+.fa{display:flex;gap:9px;margin-top:14px;}
+.bsave{background:linear-gradient(135deg,var(--green),#00873F);color:#fff;border:none;padding:10px 22px;border-radius:9px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.bsave:hover{box-shadow:0 0 18px rgba(0,230,118,.3);}
+.bcanc{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:10px 18px;border-radius:9px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.bcanc:hover{border-color:var(--red);color:var(--red);}
+
+/* SEC HDR */
+.sechdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.sectitle{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;}
+.cpill{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:var(--text2);}
+
+/* CARDS */
+.slist{display:flex;flex-direction:column;gap:11px;}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all .22s;animation:fadeUp .4s ease both;}
+.sc:hover{box-shadow:0 6px 28px rgba(0,0,0,.35);}
+.sc.dc{border-left:4px solid var(--red);background:linear-gradient(135deg,rgba(255,71,87,0.03),var(--card));}.sc.cc{border-left:3px solid var(--green);}
+
+.sctop{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;}
+.scleft{display:flex;align-items:center;gap:14px;}
+.av{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;flex-shrink:0;}
+.dc .av{background:linear-gradient(135deg,#FDEAEA,#FBCDD0);color:var(--red);}
+.cc .av{background:linear-gradient(135deg,#E6F9F0,#C0F0DC);color:var(--green);}
+.scname{font-size:15px;font-weight:700;color:var(--text);}
+.scmeta{display:flex;gap:10px;margin-top:3px;flex-wrap:wrap;}
+.smi{font-size:11px;color:var(--text2);font-weight:500;}
+.scright{display:flex;align-items:center;gap:10px;}
+.dtag{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;}
+.dtag.r{background:rgba(255,71,87,.28);color:#FF6B77;border:1px solid rgba(255,71,87,.6);font-weight:800;text-shadow:0 0 8px rgba(255,71,87,.4);}
+.dtag.g{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.25);}
+.dtag.p{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.25);}
+.chv{width:26px;height:26px;border-radius:7px;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;transition:transform .3s,background .2s;}
+.sc.open .chv{transform:rotate(180deg);background:var(--orange);color:#fff;}
+
+.scbody{display:none;border-top:1px solid var(--border);padding:18px 20px;animation:fadeUp .22s ease;}
+.sc.open .scbody{display:block;}
+
+/* MONTH PILLS */
+.mrow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.mp{display:flex;flex-direction:column;align-items:center;padding:7px 9px;border-radius:10px;min-width:48px;transition:transform .15s;cursor:default;}
+.mp:hover{transform:scale(1.07);}
+.mp.pp{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.18);}
+.mp.dp{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.18);}
+.mp-n{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.pp .mp-n{color:rgba(0,230,118,.6);}.dp .mp-n{color:rgba(255,71,87,.6);}
+.mp-i{font-size:16px;}
+
+/* SUMMARY */
+.sumrow{display:flex;gap:12px;flex-wrap:wrap;background:var(--bg3);border-radius:12px;padding:13px 16px;margin-bottom:14px;}
+.sumi{display:flex;flex-direction:column;gap:2px;}
+.suml{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.sumv{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--text);}
+.sumv.r{color:var(--red);}.sumv.g{color:var(--green);}.sumv.p{color:var(--purple);}
+
+/* ADVANCE BOX */
+.adv-box{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:12px;padding:13px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.adv-left{display:flex;align-items:center;gap:10px;}
+.adv-icon{font-size:22px;}
+.adv-info .adv-lbl{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.adv-info .adv-val{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--purple);}
+.adv-btns{display:flex;gap:7px;}
+.adv-btn{padding:7px 14px;border-radius:8px;border:none;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
+.adv-add{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid rgba(167,139,250,.3);}
+.adv-add:hover{background:rgba(167,139,250,.25);transform:scale(1.04);}
+.adv-use{background:rgba(255,107,43,.12);color:var(--orange);border:1px solid rgba(255,107,43,.25);}
+.adv-use:hover{background:rgba(255,107,43,.22);transform:scale(1.04);}
+
+/* ACTIONS */
+.acts{display:flex;gap:7px;flex-wrap:wrap;}
+.ab{display:flex;align-items:center;gap:5px;padding:9px 14px;border-radius:9px;border:none;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:all .18s;text-decoration:none;}
+.ab:hover{transform:translateY(-2px);}
+.ab-wa{background:linear-gradient(135deg,#25D366,#1AAD4A);color:#fff;}
+.ab-wa:hover{box-shadow:0 5px 18px rgba(37,211,102,.35);}
+.ab-pay{background:linear-gradient(135deg,var(--green),#00873F);color:#fff;}
+.ab-pay:hover{box-shadow:0 5px 18px rgba(0,230,118,.35);}
+.ab-cp{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+.ab-cp:hover{border-color:var(--blue);color:var(--blue);}
+.ab-dl{background:rgba(255,71,87,.08);color:var(--red);border:1px solid rgba(255,71,87,.25);}
+.ab-dl:hover{background:rgba(255,71,87,.18);box-shadow:0 5px 18px rgba(255,71,87,.2);}
+
+/* EMPTY */
+.empty{text-align:center;padding:55px 20px;}
+.ei{font-size:55px;margin-bottom:14px;}
+.empty h3{font-size:19px;font-weight:700;margin-bottom:5px;}
+.empty p{color:var(--text2);font-size:13px;}
+
+/* MODAL BASE */
+.ovrl{position:fixed;inset:0;background:rgba(5,7,20,.88);z-index:200;display:none;align-items:flex-end;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden;}
+.ovrl.show{display:flex;}
+.modal{background:var(--card2);border:1px solid var(--border);border-radius:22px 22px 0 0;padding:26px;width:100%;max-width:480px;box-shadow:0 -10px 60px rgba(0,0,0,.5);animation:slideUp .3s cubic-bezier(.22,.68,0,1.2);max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.mtitle{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.msub{font-size:12px;color:var(--text2);margin-bottom:18px;}
+
+/* PAYMENT MODAL */
+.mcks{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:20px;}
+.mck{display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .15s;font-size:13px;font-weight:600;color:var(--text2);}
+.mck.ck{background:rgba(0,230,118,.08);border-color:rgba(0,230,118,.35);color:var(--green);}
+.mck-dot{width:17px;height:17px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
+.mck.ck .mck-dot{background:var(--green);border-color:var(--green);color:#000;}
+.macts{display:flex;gap:9px;}
+.msave{flex:1;background:linear-gradient(135deg,var(--green),#00873F);color:#fff;border:none;padding:12px;border-radius:11px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
+.msave:hover{box-shadow:0 0 22px rgba(0,230,118,.4);}
+.mcanc{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:12px 18px;border-radius:11px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.mcanc:hover{border-color:var(--red);color:var(--red);}
+
+/* DELETE MODAL */
+.del-modal{background:var(--card2);border:1px solid rgba(255,71,87,.3);border-radius:22px 22px 0 0;padding:28px;width:100%;max-width:480px;box-shadow:0 -10px 60px rgba(0,0,0,.5);animation:slideUp .3s cubic-bezier(.22,.68,0,1.2);text-align:center;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.del-icon{font-size:52px;margin-bottom:14px;}
+.del-title{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--red);margin-bottom:8px;}
+.del-info{background:var(--bg3);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;}
+.del-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.del-meta{font-size:12px;color:var(--text2);}
+.del-warn{font-size:13px;color:rgba(255,71,87,.8);margin-bottom:20px;}
+.del-acts{display:flex;gap:10px;}
+.del-confirm{flex:1;background:linear-gradient(135deg,var(--red),#C0392B);color:#fff;border:none;padding:13px;border-radius:11px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
+.del-confirm:hover{box-shadow:0 0 22px rgba(255,71,87,.4);}
+.del-cancel{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:13px 20px;border-radius:11px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.del-cancel:hover{border-color:var(--text2);color:var(--text);}
+
+/* ADVANCE MODAL */
+.adv-modal{background:var(--card2);border:1px solid rgba(167,139,250,.3);border-radius:22px 22px 0 0;padding:26px;width:100%;max-width:480px;box-shadow:0 -10px 60px rgba(0,0,0,.5);animation:slideUp .3s cubic-bezier(.22,.68,0,1.2);max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.adv-modal .mtitle{color:var(--purple);}
+.adv-curr{background:var(--bg3);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.adv-curr-lbl{font-size:12px;color:var(--text3);font-weight:600;}
+.adv-curr-val{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--purple);}
+.adv-input-row{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.adv-input-row label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;}
+.adv-inp{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-family:inherit;font-size:15px;font-weight:700;outline:none;width:100%;transition:all .2s;}
+.adv-inp:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(167,139,250,.2);}
+.adv-mode-btns{display:flex;gap:8px;margin-bottom:16px;}
+.adv-mode-btn{flex:1;padding:9px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.adv-mode-btn.sel-add{background:rgba(167,139,250,.12);border-color:rgba(167,139,250,.4);color:var(--purple);}
+.adv-mode-btn.sel-use{background:rgba(255,107,43,.1);border-color:rgba(255,107,43,.3);color:var(--orange);}
+.adv-save{width:100%;background:linear-gradient(135deg,var(--purple),#7C3AED);color:#fff;border:none;padding:12px;border-radius:11px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:8px;}
+.adv-save:hover{box-shadow:0 0 22px rgba(167,139,250,.4);}
+
+/* DOC VERIFICATION BADGE */
+.doc-badge{border-radius:6px;padding:2px 7px !important;font-weight:700 !important;}
+.doc-ok{background:#E6F9F0;color:var(--green) !important;border:1px solid rgba(0,168,84,0.3);}
+.doc-no{background:#FDEAEA;color:var(--red) !important;border:1px solid rgba(224,48,64,0.3);}
+.doc-verified-btn{background:#E6F9F0 !important;color:var(--green) !important;border:1px solid rgba(0,168,84,0.4) !important;}
+.doc-pending-btn{background:#FDEAEA !important;color:var(--red) !important;border:1px solid rgba(224,48,64,0.4) !important;}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--card2);border:1px solid var(--border);color:var(--text);padding:12px 22px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.22,.68,0,1.2),opacity .3s;opacity:0;z-index:999;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes popIn{from{opacity:0;transform:scale(.88);}to{opacity:1;transform:scale(1);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(100%);}to{opacity:1;transform:translateY(0);}}
+
+/* ── MOBILE: Android + iPhone dono ke liye ── */
+@media(max-width:768px){
+  body{overflow-x:hidden;}
+  .main{padding:14px 12px;}
+  .hdr-in{padding:10px 14px;}
+  .logo h1{font-size:14px;line-height:1.2;}
+  .logo p{font-size:10px;}
+  .logo-ic{width:36px;height:36px;font-size:17px;border-radius:10px;}
+  .hdr-right{display:none;}
+
+  /* Stats 2x2 grid */
+  .stats{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+  .sbox{padding:13px 11px;border-radius:14px;}
+  .sbox-num{font-size:24px;}
+  .sbox-lbl{font-size:9px;}
+  .sbox-sub{font-size:10px;}
+
+  /* Controls */
+  .ctrl{gap:8px;}
+  .sw{min-width:100%;order:1;}
+  .tabs{order:2;width:100%;justify-content:stretch;}
+  .tb{flex:1;padding:10px 8px;font-size:11px;text-align:center;}
+  .addbtn{order:3;width:100%;padding:12px;font-size:13px;text-align:center;}
+
+  /* Form */
+  .formpanel{padding:16px 14px;border-radius:14px;}
+  .fgrid{grid-template-columns:1fr;}
+  .fg input{font-size:16px !important;padding:12px 13px;} /* 16px prevents iOS zoom */
+
+  /* Student Cards */
+  .sc{border-radius:14px;width:100%;overflow:hidden;}
+  .sctop{padding:13px 14px;}
+  .scleft{min-width:0;flex:1;}
+  .av{width:40px;height:40px;font-size:15px;border-radius:10px;flex-shrink:0;}
+  .scname{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .scmeta{flex-wrap:wrap;gap:4px 8px;}
+  .smi{font-size:10px;}
+  .dtag{font-size:10px;padding:4px 9px;white-space:nowrap;}
+  .chv{width:24px;height:24px;flex-shrink:0;}
+  .scright{flex-shrink:0;gap:6px;}
+  .scbody{padding:12px 12px;overflow:hidden;}
+
+  /* Summary row - grid on mobile */
+  .sumrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
+  .sumi{min-width:0;}
+  .sumv{font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .suml{font-size:9px;}
+
+  /* Month pills */
+  .mrow{gap:4px;flex-wrap:wrap;}
+  .mp{min-width:0;flex:1;max-width:calc(100%/6 - 4px);padding:5px 4px;border-radius:8px;}
+  .mp-n{font-size:7px;}
+  .mp-i{font-size:12px;}
+
+  /* Advance box */
+  .adv-box{flex-direction:column;align-items:flex-start;gap:8px;padding:11px 12px;}
+  .adv-btns{width:100%;gap:8px;}
+  .adv-btn{flex:1;text-align:center;padding:10px 8px;font-size:12px;}
+
+  /* Action buttons - wrap properly */
+  .acts{gap:6px;flex-wrap:wrap;}
+  .ab{padding:9px 11px;font-size:11px;border-radius:8px;flex-shrink:0;}
+
+  /* Modals - bottom sheet style */
+  .modal,.del-modal,.adv-modal{padding:22px 16px 30px;}
+  .mtitle{font-size:18px;}
+  .mcks{grid-template-columns:1fr 1fr;gap:6px;}
+  .mck{padding:10px 9px;font-size:12px;}
+  .macts{gap:8px;}
+  .msave,.mcanc,.del-confirm,.del-cancel,.adv-save{padding:14px;font-size:14px;}
+  .del-icon{font-size:42px;}
+  .del-title{font-size:19px;}
+  .adv-inp{font-size:16px !important;}
+  .adv-mode-btn{font-size:12px;padding:10px 8px;}
+
+  /* Toast */
+  .toast{white-space:normal;text-align:center;width:90%;max-width:320px;font-size:12px;padding:10px 16px;bottom:20px;}
+
+  /* Inputs - prevent zoom on Android/iOS */
+  input,select,textarea{font-size:16px !important;}
+  button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+}
+
+/* iOS Safari safe area support */
+@supports(padding:max(0px)){
+  .hdr{padding-top:max(0px,env(safe-area-inset-top));}
+  .main{padding-bottom:max(14px,env(safe-area-inset-bottom));}
+  .toast{bottom:max(20px,env(safe-area-inset-bottom));}
+}
+
+/* iOS-specific fixes */
+@supports(-webkit-touch-callout:none){
+  body{-webkit-overflow-scrolling:touch;}
+  input{-webkit-appearance:none;border-radius:9px;}
+  .modal,.del-modal,.adv-modal{-webkit-overflow-scrolling:touch;}
+}
+
+/* COLOUR PRESETS */
+.cpre{height:38px;border-radius:10px;cursor:pointer;transition:transform .15s,box-shadow .15s;border:2px solid transparent;}
+.cpre:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(0,0,0,0.25);}
+.cpre.active{border-color:#fff;box-shadow:0 0 0 3px var(--orange),0 4px 12px rgba(0,0,0,0.2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="logo">
+      <div class="logo-ic">🏠</div>
+      <div>
+        <h1>SHRI SAI NATH BOYS HOSTEL</h1>
+        <p>📍 Indore, Madhya Pradesh</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="hdr-right" id="hdate"></div>
+      <button onclick="openSettings()" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:18px;cursor:pointer;transition:all .2s;line-height:1;" title="Settings">⚙️</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- STATS -->
+  <div class="stats">
+    <div class="sbox or"><div class="sbox-ico">👥</div><div class="sbox-lbl">Total Students</div><div class="sbox-num" id="sT">0</div><div class="sbox-sub">Registered</div></div>
+    <div class="sbox re"><div class="sbox-ico">⚠️</div><div class="sbox-lbl">Due Wale</div><div class="sbox-num" id="sD">0</div><div class="sbox-sub" id="sDA">₹0 baaki</div></div>
+    <div class="sbox gr"><div class="sbox-ico">✅</div><div class="sbox-lbl">Clear</div><div class="sbox-num" id="sC">0</div><div class="sbox-sub">Sab paid</div></div>
+    <div class="sbox pu"><div class="sbox-ico">💜</div><div class="sbox-lbl">Total Advance</div><div class="sbox-num" id="sA">₹0</div><div class="sbox-sub">Jama hai</div></div>
+    <div class="sbox gr" style="cursor:pointer;" onclick="setTabDoc('verified')"><div class="sbox-ico">📄</div><div class="sbox-lbl">Docs Verified</div><div class="sbox-num" id="sDV">0</div><div class="sbox-sub">✅ Aa gaye</div></div>
+    <div class="sbox re" style="cursor:pointer;" onclick="setTabDoc('pending')"><div class="sbox-ico">📋</div><div class="sbox-lbl">Docs Pending</div><div class="sbox-num" id="sDP">0</div><div class="sbox-sub">❌ Baaki hain</div></div>
+  </div>
+
+  <div class="ctrl">
+    <div class="sw">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="si" id="q" placeholder="Naam, room ya mobile se dhundho..." oninput="render()">
+    </div>
+    <div class="tabs">
+      <button class="tb on" onclick="setTab('all',this)">Sabhi</button>
+      <button class="tb" onclick="setTab('due',this)">⚠️ Due</button>
+      <button class="tb" onclick="setTab('ok',this)">✅ Clear</button>
+      <button class="tb" onclick="setTab('docok',this)">📄✅ Verified</button>
+      <button class="tb" onclick="setTab('docno',this)">📄❌ Pending</button>
+    </div>
+    <button class="addbtn" onclick="toggleForm()">+ Add Student</button>
+  </div>
+
+  <div class="formpanel" id="fp">
+    <div class="ftitle">➕ Naya Student Add Karo</div>
+    <div class="fgrid">
+      <div class="fg"><label>Student Naam *</label><input id="fn" placeholder="Rahul Sharma"></div>
+      <div class="fg"><label>Room No *</label><input id="fr" placeholder="101"></div>
+      <div class="fg"><label>Mobile *</label><input id="fm" placeholder="9876543210" maxlength="10" type="tel"></div>
+      <div class="fg"><label>Monthly Rent ₹ *</label><input id="fe" placeholder="5000" type="number"></div>
+      <div class="fg"><label>Advance Jama ₹</label><input id="fad" placeholder="0" type="number"></div>
+      <div class="fg"><label>Date of Joining 📅</label><input id="fdoj" type="date"></div>
+      <div class="fg"><label>Shehar/Gaon</label><input id="fc" placeholder="Indore"></div>
+      <div class="fg"><label>Father Ka Naam</label><input id="ff" placeholder="Ramesh Sharma"></div>
+    </div>
+    <div class="fa">
+      <button class="bsave" onclick="addSt()">✅ Save Karo</button>
+      <button class="bcanc" onclick="toggleForm()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="sechdr">
+    <div class="sectitle" id="stitle">📋 Sabhi Students</div>
+    <div class="cpill" id="scnt"></div>
+  </div>
+  <div class="slist" id="list"></div>
+</div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="ovrl" id="payOvrl">
+  <div class="modal">
+    <div class="mtitle" id="mtl"></div>
+    <div class="msub" id="msb">✅ Green = Paid | ⬜ = Unpaid — click karke toggle karo</div>
+    <div class="mcks" id="mcks"></div>
+    <div class="macts">
+      <button class="msave" onclick="savePay()">✅ Save</button>
+      <button class="mcanc" onclick="closePayM()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="ovrl" id="delOvrl">
+  <div class="del-modal">
+    <div class="del-icon">🗑️</div>
+    <div class="del-title">Student Hatao?</div>
+    <div class="del-info">
+      <div class="del-name" id="delName"></div>
+      <div class="del-meta" id="delMeta"></div>
+    </div>
+    <div class="del-warn">⚠️ Yeh action undo nahi hoga! Student ka saara data delete ho jayega.</div>
+    <div class="del-acts">
+      <button class="del-cancel" onclick="closeDelM()">Nahi, Raho</button>
+      <button class="del-confirm" onclick="confirmDel()">Haan, Hatao</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADVANCE MODAL -->
+<div class="ovrl" id="advOvrl">
+  <div class="adv-modal">
+    <div class="mtitle" id="advTitle">💜 Advance Payment</div>
+    <div class="msub" id="advSub"></div>
+    <div class="adv-curr">
+      <div class="adv-curr-lbl">Abhi Jama Advance</div>
+      <div class="adv-curr-val" id="advCurr">₹0</div>
+    </div>
+    <div class="adv-mode-btns">
+      <button class="adv-mode-btn" id="btnModeAdd" onclick="setAdvMode('add')">➕ Advance Add Karo</button>
+      <button class="adv-mode-btn" id="btnModeUse" onclick="setAdvMode('use')">➖ Advance Use Karo</button>
+    </div>
+    <div class="adv-input-row">
+      <label id="advInpLbl">Amount Daalo (₹)</label>
+      <input class="adv-inp" id="advInp" type="number" placeholder="0">
+    </div>
+    <button class="adv-save" onclick="saveAdv()">💜 Save Karo</button>
+    <button class="mcanc" style="width:100%" onclick="closeAdvM()">Cancel</button>
+  </div>
+</div>
+
+<!-- DOJ EDIT MODAL -->
+<div class="ovrl" id="dojOvrl">
+  <div class="adv-modal">
+    <div class="mtitle" style="color:#7C5CDB">📅 Date of Joining Edit Karo</div>
+    <div class="msub" id="dojSub"></div>
+    <div class="adv-input-row" style="margin-top:10px;">
+      <label>Date of Joining</label>
+      <input class="adv-inp" id="dojInp" type="date">
+    </div>
+    <button class="adv-save" style="background:linear-gradient(135deg,#7C5CDB,#5B21B6)" onclick="saveDoj()">📅 Save Karo</button>
+    <button class="mcanc" style="width:100%;margin-top:8px;" onclick="closeDojM()">Cancel</button>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="ovrl" id="settOvrl">
+  <div class="adv-modal" style="border-color:rgba(232,93,32,0.3);">
+    <div class="mtitle" style="color:var(--orange)">⚙️ Settings</div>
+    <div class="msub">Hostel ki settings yahan se badlo</div>
+
+    <!-- UPI Section -->
+    <div style="background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:14px;border:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#6B2FD9,#4A1BA8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">💜</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text)">PhonePe UPI ID</div>
+          <div style="font-size:11px;color:var(--text3)">Payment link messages mein jaayega</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;">Aapka UPI ID</label>
+        <input class="adv-inp" id="upiInp" type="text" placeholder="1234567890@ybl" style="font-size:14px;font-weight:600;">
+        <div style="font-size:10px;color:var(--text3);">💡 Example: 9876543210@ybl / name@ibl / name@axl</div>
+      </div>
+    </div>
+
+    <!-- Hostel Name Section -->
+    <div style="background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:14px;border:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--orange),#E64000);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">🏠</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Message mein Naam</div>
+          <div style="font-size:11px;color:var(--text3)">WhatsApp/Copy message mein dikhega</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;">Hostel ka Naam</label>
+        <input class="adv-inp" id="hostelNameInp" type="text" placeholder="Shri Sai Nath Boys Hostel" style="font-size:13px;">
+      </div>
+    </div>
+
+    <!-- Backup Section -->
+    <div style="background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#2A7FE0,#1A6CC8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">💾</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Data Backup</div>
+          <div style="font-size:11px;color:var(--text3)">Data save karo ya restore karo</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <button onclick="exportData()" style="flex:1;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#2A7FE0,#1A6CC8);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">⬇️ Download Backup</button>
+        <button onclick="document.getElementById('impFile').click()" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">⬆️ Restore Backup</button>
+      </div>
+      <input type="file" id="impFile" accept=".json" style="display:none" onchange="importData(this)">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:10px;color:var(--text3);">💡 Har hafte backup lena acha rehta hai</div>
+        <span id="saveStatus" style="font-size:10px;font-weight:700;color:#9AA0C0;background:#F0F4FF;border:1px solid #D0D8F0;border-radius:6px;padding:3px 8px;">⏳ Loading...</span>
+      </div>
+    </div>
+
+    <!-- Colour Theme Section -->
+    <div style="background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF6B6B,#A855F7,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">🎨</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Theme Colour</div>
+          <div style="font-size:11px;color:var(--text3)">App ka main colour badlo</div>
+        </div>
+      </div>
+      <!-- Preset colours -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;" id="colourPresets">
+        <div onclick="pickPreset('#E85D20')" class="cpre" style="background:linear-gradient(135deg,#E85D20,#E64000);" title="Orange (Default)"></div>
+        <div onclick="pickPreset('#7C5CDB')" class="cpre" style="background:linear-gradient(135deg,#7C5CDB,#5B21B6);" title="Purple"></div>
+        <div onclick="pickPreset('#2A7FE0')" class="cpre" style="background:linear-gradient(135deg,#2A7FE0,#1A5FB0);" title="Blue"></div>
+        <div onclick="pickPreset('#00A854')" class="cpre" style="background:linear-gradient(135deg,#00A854,#007A3D);" title="Green"></div>
+        <div onclick="pickPreset('#E03040')" class="cpre" style="background:linear-gradient(135deg,#E03040,#B02030);" title="Red"></div>
+        <div onclick="pickPreset('#E6A800')" class="cpre" style="background:linear-gradient(135deg,#E6A800,#B07D00);" title="Yellow"></div>
+        <div onclick="pickPreset('#EC4899')" class="cpre" style="background:linear-gradient(135deg,#EC4899,#BE185D);" title="Pink"></div>
+        <div onclick="pickPreset('#14B8A6')" class="cpre" style="background:linear-gradient(135deg,#14B8A6,#0D7A6E);" title="Teal"></div>
+        <div onclick="pickPreset('#F97316')" class="cpre" style="background:linear-gradient(135deg,#F97316,#C25300);" title="Amber"></div>
+        <div onclick="pickPreset('#6366F1')" class="cpre" style="background:linear-gradient(135deg,#6366F1,#4338CA);" title="Indigo"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <label style="font-size:11px;font-weight:700;color:var(--text2);white-space:nowrap;">Custom Colour:</label>
+        <input type="color" id="customColour" value="#E85D20" oninput="pickPreset(this.value)" style="width:44px;height:36px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;background:var(--card);">
+        <div id="colourPreview" style="flex:1;height:36px;border-radius:8px;background:var(--orange);transition:background .2s;"></div>
+      </div>
+    </div>
+
+    <!-- Install App Section -->
+    <div style="background:var(--bg3);border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#00A854,#007A3D);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">📲</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Home Screen Pe Add Karo</div>
+          <div style="font-size:11px;color:var(--text3)">App jaisi shortcut banao — ek tap mein khule</div>
+        </div>
+      </div>
+
+      <!-- Android -->
+      <div style="background:#E8F5E9;border:1px solid #81C784;border-radius:10px;padding:12px;margin-bottom:10px;">
+        <div style="font-size:12px;font-weight:700;color:#1B5E20;margin-bottom:6px;">🤖 Android ke liye:</div>
+        <div style="font-size:12px;color:#2E7D32;line-height:1.9;">
+          1️⃣ Yeh HTML file phone mein download karo<br>
+          2️⃣ <b>Chrome</b> mein open karo (Files app se)<br>
+          3️⃣ Upar <b>⋮ (3 dots)</b> → <b>"Add to Home screen"</b><br>
+          4️⃣ Name dalo → <b>Add</b> dabaao<br>
+          ✅ Home screen pe icon aa jayega!
+        </div>
+      </div>
+
+      <!-- iPhone -->
+      <div style="background:#E3F2FD;border:1px solid #90CAF9;border-radius:10px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:#0D47A1;margin-bottom:6px;">🍎 iPhone ke liye:</div>
+        <div style="font-size:12px;color:#1565C0;line-height:1.9;">
+          1️⃣ Yeh HTML file phone mein download karo<br>
+          2️⃣ <b>Safari</b> mein open karo<br>
+          3️⃣ Neeche <b>Share button (□↑)</b> dabaao<br>
+          4️⃣ <b>"Add to Home Screen"</b> select karo<br>
+          ✅ Home screen pe icon aa jayega!
+        </div>
+      </div>
+
+      <div style="margin-top:10px;background:#FFF8E7;border:1px solid #FFE082;border-radius:8px;padding:10px;font-size:11px;color:#7A5800;line-height:1.6;">
+        💡 <b>Data ke baare mein:</b> IndexedDB mein save hota hai — browser clear karo tab bhi data <b>safe</b> rahega. Sirf phone format karne pe data jayega, tab <b>Backup Download</b> zaroor karo.
+      </div>
+    </div>
+
+    <button class="adv-save" style="background:linear-gradient(135deg,var(--orange),#E64000);" onclick="saveSettings()">✅ Settings Save Karo</button>
+    <button class="mcanc" style="width:100%;margin-top:8px;" onclick="closeSettings()">Cancel</button>
+  </div>
+</div>
+
+<div class="toast" id="tst"></div>
+
+<script>
+const MN=['Jan','Feb','Mar','Apr','Mai','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const NOW=new Date(), CM=NOW.getMonth();
+document.getElementById('hdate').innerHTML='📅 <b>'+NOW.toLocaleDateString('hi-IN',{day:'numeric',month:'long',year:'numeric'})+'</b>';
+
+const DEFAULT_STUDENTS=[
+  {id:1,name:'Rahul Sharma',room:'101',mob:'9876543210',rent:5000,city:'Indore',father:'Ramesh Sharma',advance:10000,paid:[1,1,1,1,0,0,0,0,0,0,0,0]},
+  {id:2,name:'Vikash Patel',room:'101',mob:'9765432109',rent:5000,city:'Dewas',father:'Suresh Patel',advance:0,paid:[1,1,0,0,0,0,0,0,0,0,0,0]},
+  {id:3,name:'Amit Singh',room:'102',mob:'9654321098',rent:6000,city:'Ujjain',father:'Rajesh Singh',advance:6000,paid:[1,1,1,1,1,0,0,0,0,0,0,0]},
+  {id:4,name:'Rohit Gupta',room:'102',mob:'9543210987',rent:6000,city:'Indore',father:'Manoj Gupta',advance:0,paid:[1,0,0,0,0,0,0,0,0,0,0,0]},
+  {id:5,name:'Sanjay Verma',room:'103',mob:'9432109876',rent:5500,city:'Ratlam',father:'Dinesh Verma',advance:5500,paid:[1,1,1,1,0,0,0,0,0,0,0,0]},
+  {id:6,name:'Pradeep Yadav',room:'104',mob:'9321098765',rent:5000,city:'Shajapur',father:'Ramkishan Yadav',advance:0,paid:[1,1,1,0,0,0,0,0,0,0,0,0]},
+  {id:7,name:'Deepak Kumar',room:'105',mob:'9210987654',rent:7000,city:'Mandsaur',father:'Harish Kumar',advance:14000,paid:[1,1,1,1,1,1,0,0,0,0,0,0]},
+  {id:8,name:'Ankit Jain',room:'106',mob:'9109876543',rent:6500,city:'Indore',father:'Sunil Jain',advance:0,paid:[1,1,1,1,0,0,0,0,0,0,0,0]},
+];
+
+// ═══════════════════════════════════════════════
+// STORAGE ENGINE - IndexedDB + LocalStorage + Memory fallback
+// Mobile (Android/iOS) sab mein kaam karta hai
+// ═══════════════════════════════════════════════
+let DB = null;
+const DB_NAME = 'SaiNathHostelDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'hostelData';
+
+function initDB() {
+  return new Promise((resolve) => {
+    if (!window.indexedDB) { resolve(false); return; }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: 'key' });
+      }
+    };
+    req.onsuccess = (e) => { DB = e.target.result; resolve(true); };
+    req.onerror = () => { resolve(false); };
+  });
+}
+
+function idbSave(data) {
+  return new Promise((resolve) => {
+    if (!DB) { resolve(false); return; }
+    try {
+      const tx = DB.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      store.put({ key: 'main', ...data });
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    } catch(e) { resolve(false); }
+  });
+}
+
+function idbLoad() {
+  return new Promise((resolve) => {
+    if (!DB) { resolve(null); return; }
+    try {
+      const tx = DB.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.get('main');
+      req.onsuccess = (e) => resolve(e.target.result || null);
+      req.onerror = () => resolve(null);
+    } catch(e) { resolve(null); }
+  });
+}
+
+// LocalStorage fallback
+function lsSave(data) {
+  try { localStorage.setItem('saiNathHostel', JSON.stringify(data)); return true; } catch(e) { return false; }
+}
+function lsLoad() {
+  try { const v = localStorage.getItem('saiNathHostel'); return v ? JSON.parse(v) : null; } catch(e) { return null; }
+}
+
+// Memory fallback (last resort)
+let _memData = null;
+
+async function saveData() {
+  const data = { students, nid, upiId, hostelName, themeColour };
+  // Try IndexedDB first (best for mobile)
+  const idbOk = await idbSave(data);
+  // Also save to localStorage as backup
+  const lsOk = lsSave(data);
+  // Memory always
+  _memData = data;
+
+  const el = document.getElementById('saveStatus');
+  if (el) {
+    if (idbOk) {
+      el.textContent = '✅ Saved';
+      el.style.cssText = 'color:#00A854;font-size:10px;font-weight:700;background:rgba(0,168,84,0.1);border:1px solid rgba(0,168,84,0.2);border-radius:6px;padding:3px 9px;';
+    } else if (lsOk) {
+      el.textContent = '⚡ Saved (Limited)';
+      el.style.cssText = 'color:#E6A800;font-size:10px;font-weight:700;background:rgba(230,168,0,0.1);border:1px solid rgba(230,168,0,0.3);border-radius:6px;padding:3px 9px;';
+    } else {
+      el.textContent = '⚠️ Save Failed!';
+      el.style.cssText = 'color:#E03040;font-size:10px;font-weight:700;background:rgba(224,48,64,0.1);border:1px solid rgba(224,48,64,0.3);border-radius:6px;padding:3px 9px;';
+      toast('⚠️ Auto-save kaam nahi kar raha! Download Backup karo!');
+    }
+  }
+}
+
+async function loadData() {
+  // 1. Try IndexedDB
+  const idbData = await idbLoad();
+  if (idbData && idbData.students) {
+    students = idbData.students;
+    nid = idbData.nid || 9;
+    if (idbData.upiId) upiId = idbData.upiId;
+    if (idbData.hostelName) hostelName = idbData.hostelName;
+    if (idbData.themeColour) { themeColour = idbData.themeColour; applyTheme(themeColour); }
+    return;
+  }
+  // 2. Try localStorage
+  const lsData = lsLoad();
+  if (lsData && lsData.students) {
+    students = lsData.students;
+    nid = lsData.nid || 9;
+    if (lsData.upiId) upiId = lsData.upiId;
+    if (lsData.hostelName) hostelName = lsData.hostelName;
+    if (lsData.themeColour) { themeColour = lsData.themeColour; applyTheme(themeColour); }
+    idbSave(lsData);
+    return;
+  }
+  // 3. Default data
+  students = DEFAULT_STUDENTS.map(s => ({...s, paid:[...s.paid]}));
+  nid = 9;
+}
+
+// ── EXPORT (Download JSON backup) ──
+function exportData() {
+  try {
+    const dt = new Date().toLocaleDateString('en-IN').replace(/\//g,'-');
+    const data = JSON.stringify({ students, nid, exportedAt: new Date().toISOString() }, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'SaiNathHostel_' + dt + '.json'; a.click();
+    URL.revokeObjectURL(url);
+    toast('✅ Backup download ho gaya!');
+  } catch(e) { toast('⚠️ Download mein error: ' + e.message); }
+}
+
+// ── IMPORT (Restore JSON backup) ──
+function importData(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (!parsed.students || !Array.isArray(parsed.students)) throw new Error('Invalid file');
+      if (!confirm(parsed.students.length + ' students ka data restore karo?\n⚠️ Current data replace ho jayega!')) return;
+      students = parsed.students;
+      nid = parsed.nid || students.length + 1;
+      await saveData(); render(); toast('✅ ' + students.length + ' students restore ho gaye!');
+    } catch(err) { toast('❌ Invalid backup file!'); }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+let students = [], nid = 9;
+let upiId = '';
+let hostelName = 'Shri Sai Nath Boys Hostel, Indore';
+let themeColour = '#E85D20';
+let tab = 'all', payMid = null, delMid = null, advMid = null, advMode = 'add';
+
+// ── THEME ──
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+  return {r,g,b};
+}
+function lighten(hex, factor){
+  const {r,g,b}=hexToRgb(hex);
+  return `rgb(${Math.min(255,Math.round(r+(255-r)*factor))},${Math.min(255,Math.round(g+(255-g)*factor))},${Math.min(255,Math.round(b+(255-b)*factor))})`;
+}
+function applyTheme(hex){
+  const {r,g,b}=hexToRgb(hex);
+  const root=document.documentElement;
+  root.style.setProperty('--orange', hex);
+  root.style.setProperty('--orange-glow', `rgba(${r},${g},${b},0.18)`);
+  root.style.setProperty('--bg', lighten(hex,0.94));
+  root.style.setProperty('--bg2', lighten(hex,0.90));
+  root.style.setProperty('--bg3', lighten(hex,0.97));
+  root.style.setProperty('--card2', lighten(hex,0.95));
+  root.style.setProperty('--border', lighten(hex,0.75));
+  // Update theme-color meta (browser toolbar colour on Android)
+  const tm = document.getElementById('themeMetaColor');
+  if(tm) tm.content = hex;
+  // Update save button in settings
+  const sb=document.querySelector('.adv-save[onclick="saveSettings()"]');
+  if(sb) sb.style.background=`linear-gradient(135deg,${hex},${hex}dd)`;
+}
+
+function pickPreset(hex){
+  themeColour = hex;
+  applyTheme(hex);
+  // Update custom colour input
+  const inp=document.getElementById('customColour');
+  if(inp) inp.value=hex;
+  // Update preview
+  const prev=document.getElementById('colourPreview');
+  if(prev) prev.style.background=hex;
+  // Mark active preset
+  document.querySelectorAll('.cpre').forEach(el=>{
+    el.classList.toggle('active', el.getAttribute('onclick')===`pickPreset('${hex}')`);
+  });
+}
+
+// ── SETTINGS ──
+function openSettings() {
+  document.getElementById('upiInp').value = upiId;
+  document.getElementById('hostelNameInp').value = hostelName;
+  document.getElementById('customColour').value = themeColour;
+  document.getElementById('colourPreview').style.background = themeColour;
+  // Mark active preset
+  document.querySelectorAll('.cpre').forEach(el=>{
+    el.classList.toggle('active', el.getAttribute('onclick')===`pickPreset('${themeColour}')`);
+  });
+  document.getElementById('settOvrl').classList.add('show');
+}
+async function saveSettings() {
+  const newUpi = document.getElementById('upiInp').value.trim();
+  const newName = document.getElementById('hostelNameInp').value.trim();
+  upiId = newUpi;
+  if (newName) hostelName = newName;
+  applyTheme(themeColour);
+  await saveData();
+  closeSettings();
+  toast('✅ Settings save ho gayi!');
+}
+function closeSettings() { document.getElementById('settOvrl').classList.remove('show'); }
+document.getElementById('settOvrl').addEventListener('click', function(e){ if(e.target===this) closeSettings(); });
+
+// App start - pehle DB initialize karo, phir load karo
+(async function init() {
+  await initDB();
+  await loadData();
+  render();
+})();
+
+const dm=s=>{let d=0;for(let i=0;i<=CM;i++)if(!s.paid[i])d++;return d;};
+const da=s=>{const due=dm(s)*s.rent; return Math.max(0, due - (s.advance||0));};
+const ini=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+
+function stats(){
+  const dues=students.filter(s=>da(s)>0);
+  const totalAdv=students.reduce((a,s)=>a+(s.advance||0),0);
+  const docV=students.filter(s=>s.docVerified).length;
+  const docP=students.filter(s=>!s.docVerified).length;
+  document.getElementById('sT').textContent=students.length;
+  document.getElementById('sD').textContent=dues.length;
+  document.getElementById('sDA').textContent='₹'+dues.reduce((a,s)=>a+da(s),0).toLocaleString('en-IN')+' baaki';
+  document.getElementById('sC').textContent=students.filter(s=>da(s)===0).length;
+  document.getElementById('sA').textContent='₹'+totalAdv.toLocaleString('en-IN');
+  document.getElementById('sDV').textContent=docV;
+  document.getElementById('sDP').textContent=docP;
+}
+
+function getTag(s){
+  const d=da(s), adv=s.advance||0;
+  if(d>0) return `<div class="dtag r">₹${d.toLocaleString('en-IN')} Due</div>`;
+  if(adv>0) return `<div class="dtag p">💜 ₹${adv.toLocaleString('en-IN')} Advance</div>`;
+  return `<div class="dtag g">✅ Clear</div>`;
+}
+
+function render(){
+  const q=document.getElementById('q').value.toLowerCase();
+  let list=students;
+  if(tab==='due') list=list.filter(s=>da(s)>0);
+  else if(tab==='ok') list=list.filter(s=>da(s)===0);
+  else if(tab==='docok') list=list.filter(s=>s.docVerified);
+  else if(tab==='docno') list=list.filter(s=>!s.docVerified);
+  if(q) list=list.filter(s=>s.name.toLowerCase().includes(q)||s.room.toLowerCase().includes(q)||s.mob.includes(q));
+  document.getElementById('stitle').textContent={all:'📋 Sabhi Students',due:'⚠️ Due Wale',ok:'✅ Clear Students',docok:'📄✅ Docs Verified',docno:'📄❌ Docs Pending'}[tab];
+  document.getElementById('scnt').textContent=list.length+' students';
+  const el=document.getElementById('list');
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><div class="ei">${tab==='ok'?'🎉':'🔍'}</div><h3>${tab==='ok'?'Sabka payment clear!':'Koi nahi mila'}</h3><p>${tab==='ok'?'Sab students up-to-date hain':'Search ya filter change karein'}</p></div>`;
+    return;
+  }
+  el.innerHTML=list.map((s,i)=>{
+    const d=da(s), m=dm(s), isD=d>0, adv=s.advance||0, av=ini(s.name);
+    const rawDue=dm(s)*s.rent;
+    const pills=MN.slice(0,CM+1).map((mn,j)=>`<div class="mp ${s.paid[j]?'pp':'dp'}"><div class="mp-n">${mn}</div><div class="mp-i">${s.paid[j]?'✅':'❌'}</div></div>`).join('');
+    const upiLink = upiId ? `upi://pay?pa=${upiId}&pn=${encodeURIComponent(hostelName)}&am=${d}&cu=INR` : '';
+    const payLine = upiId ? `\n\n💜 PhonePe se seedha pay karo:\n${upiLink}` : '';
+    const wm=encodeURIComponent(`🙏 Namaskar ${s.name} ji,\n\n${hostelName}\nRoom No: ${s.room}\n\n${m} mahine ka rent baaki hai.\nTotal Due: ₹${d.toLocaleString('en-IN')}${payLine}\n\nKripya jald payment karein.\nDhanyavad 🏠`);
+    const cardClass = isD ? 'dc' : 'cc';
+    return`<div class="sc ${cardClass}" id="sc${s.id}" style="animation-delay:${i*.05}s">
+<div class="sctop" onclick="tog(${s.id})">
+  <div class="scleft" style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
+    <div class="av">${av}</div>
+    <div style="min-width:0;flex:1;">
+      <div class="scname">${s.name}</div>
+      <div class="scmeta">
+        <span class="smi">🚪 ${s.room}</span>
+        <span class="smi">📞 ${s.mob}</span>
+        ${s.city?`<span class="smi">📍 ${s.city}</span>`:''}
+        ${s.doj?`<span class="smi">📅 ${new Date(s.doj).toLocaleDateString('hi-IN',{day:'numeric',month:'short',year:'numeric'})}</span>`:''}
+      </div>
+    </div>
+  </div>
+  <div class="scright">
+    ${getTag(s)}
+    <div class="chv">▾</div>
+  </div>
+</div>
+<div class="scbody">
+  <div class="sumrow">
+    <div class="sumi"><div class="suml">Monthly Rent</div><div class="sumv">₹${s.rent.toLocaleString('en-IN')}</div></div>
+    <div class="sumi"><div class="suml">Due Months</div><div class="sumv ${isD?'r':'g'}">${m}</div></div>
+    <div class="sumi"><div class="suml">Net Due</div><div class="sumv ${isD?'r':'g'}">₹${d.toLocaleString('en-IN')}</div></div>
+    ${adv>0?`<div class="sumi"><div class="suml">Advance</div><div class="sumv p">₹${adv.toLocaleString('en-IN')}</div></div>`:''}
+    ${s.father?`<div class="sumi"><div class="suml">Father</div><div class="sumv" style="font-size:14px;">${s.father}</div></div>`:''}
+    ${s.doj?`<div class="sumi"><div class="suml">Joining</div><div class="sumv" style="font-size:13px;">${new Date(s.doj).toLocaleDateString('hi-IN',{day:'numeric',month:'short',year:'numeric'})}</div></div>`:''}
+    <div class="sumi"><div class="suml">Documents</div><div class="sumv" style="font-size:13px;color:${s.docVerified?'var(--green)':'var(--red)'}">${s.docVerified?'✅ Verified':'❌ Pending'}</div></div>
+  </div>
+  <div class="adv-box">
+    <div class="adv-left">
+      <div class="adv-icon">💜</div>
+      <div class="adv-info">
+        <div class="adv-lbl">Advance Jama</div>
+        <div class="adv-val">₹${adv.toLocaleString('en-IN')}</div>
+      </div>
+    </div>
+    <div class="adv-btns">
+      <button class="adv-btn adv-add" onclick="openAdvM(${s.id},'add');event.stopPropagation()">➕ Jama Karo</button>
+      ${adv>0?`<button class="adv-btn adv-use" onclick="openAdvM(${s.id},'use');event.stopPropagation()">➖ Use Karo</button>`:''}
+    </div>
+  </div>
+  <div class="mrow">${pills}</div>
+  <div class="acts">
+    ${isD?`<a class="ab ab-wa" href="https://wa.me/91${s.mob}?text=${wm}" target="_blank">📱 WhatsApp</a>`:''}
+    ${isD&&upiId?`<button class="ab" style="background:linear-gradient(135deg,#6B2FD9,#4A1BA8);color:#fff;border:none;" onclick="openUpi('${upiId}',${d},'${encodeURIComponent(hostelName)}');event.stopPropagation()">💜 Pay Now</button>`:''}
+    <button class="ab ab-pay" onclick="openPayM(${s.id});event.stopPropagation()">💰 Payment Mark</button>
+    <button class="ab ab-cp" onclick="cpMsg(${s.id});event.stopPropagation()">📋 Copy</button>
+    <button class="ab" style="background:#EEF2FF;color:#7C5CDB;border:1px solid #C4B5FD;" onclick="openDojM(${s.id});event.stopPropagation()">📅 Date Edit</button>
+    <button class="ab ${s.docVerified?'doc-verified-btn':'doc-pending-btn'}" onclick="toggleDoc(${s.id},event)">${s.docVerified?'📄 Docs ✅':'📄 Docs ❌'}</button>
+    <button class="ab ab-dl" onclick="openDelM(${s.id});event.stopPropagation()">🗑 Hatao</button>
+  </div>
+</div>
+</div>`;
+  }).join('');
+  stats();
+}
+
+function tog(id){document.getElementById('sc'+id).classList.toggle('open');}
+
+// ── UPI PAYMENT OPENER ──
+function openUpi(upiId, amount, name) {
+  // Try PhonePe specific first, then generic UPI
+  const links = [
+    `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR`,
+    `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR`,
+    `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR`,
+  ];
+  // Try to open, fallback chain
+  let tried = 0;
+  function tryNext() {
+    if (tried >= links.length) {
+      // All failed - show manual UPI ID
+      toast(`💜 UPI ID: ${upiId} — Amount: ₹${amount}`);
+      navigator.clipboard && navigator.clipboard.writeText(upiId);
+      return;
+    }
+    window.location.href = links[tried++];
+    // If app doesn't open in 1.5s, try next
+    setTimeout(() => {
+      if (!document.hidden) tryNext();
+    }, 1500);
+  }
+  tryNext();
+}
+function setTab(t,b){tab=t;document.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));b.classList.add('on');render();}
+function setTabDoc(type){
+  tab=type==='verified'?'docok':'docno';
+  document.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+  render();
+}
+function toggleForm(){document.getElementById('fp').classList.toggle('show');}
+
+async function addSt(){
+  const name=document.getElementById('fn').value.trim(),room=document.getElementById('fr').value.trim();
+  const mob=document.getElementById('fm').value.trim(),rent=parseInt(document.getElementById('fe').value)||0;
+  const advance=parseInt(document.getElementById('fad').value)||0;
+  const doj=document.getElementById('fdoj').value||'';
+  if(!name||!room||!mob||!rent){toast('⚠️ Naam, Room, Mobile aur Rent zaroori hai!');return;}
+  if(mob.length!==10){toast('⚠️ Mobile 10 digit ka hona chahiye!');return;}
+  students.push({id:nid++,name,room,mob,rent,advance,doj,city:document.getElementById('fc').value.trim(),father:document.getElementById('ff').value.trim(),paid:Array(12).fill(0)});
+  ['fn','fr','fm','fe','fad','fdoj','fc','ff'].forEach(i=>document.getElementById(i).value='');
+  await saveData();toggleForm();render();toast('✅ Student add ho gaya!');
+}
+
+// ── DELETE MODAL ──
+function openDelM(id){
+  delMid=id;
+  const s=students.find(x=>x.id===id);
+  document.getElementById('delName').textContent=s.name;
+  document.getElementById('delMeta').textContent=`Room ${s.room} | 📞 ${s.mob} | Rent: ₹${s.rent.toLocaleString('en-IN')}/month`;
+  document.getElementById('delOvrl').classList.add('show');
+}
+async function confirmDel(){
+  students=students.filter(s=>s.id!==delMid);
+  closeDelM();await saveData();render();toast('🗑 Student hata diya gaya!');
+}
+function closeDelM(){document.getElementById('delOvrl').classList.remove('show');delMid=null;}
+document.getElementById('delOvrl').addEventListener('click',function(e){if(e.target===this)closeDelM();});
+
+// ── PAYMENT MODAL ──
+function openPayM(id){
+  payMid=id;const s=students.find(x=>x.id===id);
+  document.getElementById('mtl').textContent='💰 '+s.name;
+  document.getElementById('mcks').innerHTML=MN.slice(0,CM+1).map((mn,i)=>`
+    <div class="mck ${s.paid[i]?'ck':''}" id="mc${i}" onclick="tcm(${i})">
+      <div class="mck-dot">${s.paid[i]?'✓':''}</div>${mn}
+    </div>`).join('');
+  document.getElementById('payOvrl').classList.add('show');
+}
+function tcm(i){const e=document.getElementById('mc'+i);e.classList.toggle('ck');e.querySelector('.mck-dot').textContent=e.classList.contains('ck')?'✓':'';}
+async function savePay(){
+  const s=students.find(x=>x.id===payMid);let added=0,removed=0;
+  for(let i=0;i<=CM;i++){
+    const e=document.getElementById('mc'+i);if(!e)continue;
+    const ck=e.classList.contains('ck');
+    if(ck&&!s.paid[i]){s.paid[i]=1;added++;}
+    else if(!ck&&s.paid[i]){s.paid[i]=0;removed++;}
+  }
+  closePayM();await saveData();render();
+  let msg='✅ Done!';
+  if(added>0&&removed>0)msg=`✅ ${added} add, ${removed} hataaye!`;
+  else if(added>0)msg=`✅ ${added} mahine ka payment mark ho gaya!`;
+  else if(removed>0)msg=`↩️ ${removed} mahine ka payment hata diya!`;
+  toast(msg);
+}
+function closePayM(){document.getElementById('payOvrl').classList.remove('show');payMid=null;}
+document.getElementById('payOvrl').addEventListener('click',function(e){if(e.target===this)closePayM();});
+
+// ── ADVANCE MODAL ──
+function openAdvM(id, mode){
+  advMid=id;
+  const s=students.find(x=>x.id===id);
+  document.getElementById('advTitle').textContent='💜 '+s.name+' — Advance';
+  document.getElementById('advSub').textContent='Room '+s.room+' | Rent: ₹'+s.rent.toLocaleString('en-IN')+'/month';
+  document.getElementById('advCurr').textContent='₹'+(s.advance||0).toLocaleString('en-IN');
+  document.getElementById('advInp').value='';
+  setAdvMode(mode||'add');
+  document.getElementById('advOvrl').classList.add('show');
+}
+function setAdvMode(m){
+  advMode=m;
+  const btnAdd=document.getElementById('btnModeAdd'), btnUse=document.getElementById('btnModeUse');
+  btnAdd.className='adv-mode-btn'+(m==='add'?' sel-add':'');
+  btnUse.className='adv-mode-btn'+(m==='use'?' sel-use':'');
+  document.getElementById('advInpLbl').textContent=m==='add'?'Kitna Advance Jama Hua? (₹)':'Kitna Advance Use Karo? (₹)';
+}
+async function saveAdv(){
+  const s=students.find(x=>x.id===advMid);
+  const amt=parseInt(document.getElementById('advInp').value)||0;
+  if(!amt||amt<=0){toast('⚠️ Amount daalo!');return;}
+  if(advMode==='add'){
+    s.advance=(s.advance||0)+amt;
+    closeAdvM();await saveData();render();toast(`💜 ₹${amt.toLocaleString('en-IN')} advance jama ho gaya!`);
+  } else {
+    if(amt>(s.advance||0)){toast(`⚠️ Sirf ₹${(s.advance||0).toLocaleString('en-IN')} hi available hai!`);return;}
+    s.advance=(s.advance||0)-amt;
+    closeAdvM();await saveData();render();toast(`✅ ₹${amt.toLocaleString('en-IN')} advance use ho gaya!`);
+  }
+}
+function closeAdvM(){document.getElementById('advOvrl').classList.remove('show');advMid=null;}
+document.getElementById('advOvrl').addEventListener('click',function(e){if(e.target===this)closeAdvM();});
+
+function cpMsg(id){
+  const s=students.find(x=>x.id===id);
+  const d=da(s), m=dm(s);
+  const upiLink = upiId ? `upi://pay?pa=${upiId}&pn=${encodeURIComponent(hostelName)}&am=${d}&cu=INR` : '';
+  const payLine = upiId ? `\n\n💜 PhonePe se seedha pay karo:\n${upiLink}` : '';
+  const msg = `🙏 Namaskar ${s.name} ji,\n\n${hostelName}\nRoom No: ${s.room}\n\n${m} mahine ka rent baaki hai.\nTotal Due: ₹${d.toLocaleString('en-IN')}${payLine}\n\nKripya jald payment karein.\nDhanyavad 🏠`;
+  navigator.clipboard.writeText(msg).then(()=>toast('📋 Message copy ho gaya!'));
+}
+
+function toast(msg){
+  const t=document.getElementById('tst');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+// ── DOCUMENT VERIFICATION ──
+async function toggleDoc(id, e){
+  if(e) e.stopPropagation();
+  const s=students.find(x=>x.id===id);
+  s.docVerified=!s.docVerified;
+  const card=document.getElementById('sc'+id);
+  const wasOpen=card.classList.contains('open');
+  await saveData();render();
+  if(wasOpen) document.getElementById('sc'+id).classList.add('open');
+  toast(s.docVerified?'📄 Document Verified ho gaya! ✅':'📄 Document Pending mark ho gaya ❌');
+}
+
+// ── DOJ MODAL ──
+let dojMid=null;
+function openDojM(id){
+  dojMid=id;
+  const s=students.find(x=>x.id===id);
+  document.getElementById('dojSub').textContent=s.name+' | Room '+s.room;
+  document.getElementById('dojInp').value=s.doj||'';
+  document.getElementById('dojOvrl').classList.add('show');
+}
+async function saveDoj(){
+  const s=students.find(x=>x.id===dojMid);
+  const val=document.getElementById('dojInp').value;
+  if(!val){toast('⚠️ Date select karo!');return;}
+  s.doj=val;
+  closeDojM();await saveData();render();toast('📅 Date of Joining save ho gaya!');
+}
+function closeDojM(){document.getElementById('dojOvrl').classList.remove('show');dojMid=null;}
+document.getElementById('dojOvrl').addEventListener('click',function(e){if(e.target===this)closeDojM();});
+
+// ══════════════════════════════════════════════
+// PWA - Manifest only (for Add to Home Screen)
+// ══════════════════════════════════════════════
+function setupManifest() {
+  try {
+    const manifest = {
+      name: 'Shri Sai Nath Boys Hostel',
+      short_name: 'Sai Hostel',
+      description: 'Hostel Rent Management',
+      start_url: './',
+      display: 'standalone',
+      orientation: 'portrait',
+      background_color: '#F0F4FF',
+      theme_color: themeColour || '#E85D20',
+      icons: [{
+        src: makeIcon(themeColour || '#E85D20'),
+        sizes: '192x192',
+        type: 'image/png'
+      }]
+    };
+    const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+    document.getElementById('pwaManifest').href = URL.createObjectURL(blob);
+  } catch(e) {}
+}
+
+function makeIcon(color) {
+  try {
+    const c = document.createElement('canvas');
+    c.width = c.height = 192;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.roundRect(0, 0, 192, 192, 40);
+    ctx.fill();
+    ctx.font = '100px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('🏠', 96, 100);
+    return c.toDataURL('image/png');
+  } catch(e) { return ''; }
+}
+
+setupManifest();
+</script>
+</body>
+</html>
